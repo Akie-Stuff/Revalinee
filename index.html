@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>🌸 Catatan Manis untuk Chizu 💜</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #b388eb, #fbc2eb);
+      color: #4b0082;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #6a0dad;
+      text-shadow: 2px 2px 5px #fff;
+    }
+
+    #quoteBox {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 25px;
+      padding: 20px 30px;
+      font-size: 1.3rem;
+      max-width: 500px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      position: relative;
+    }
+
+    #quoteBox::before, #quoteBox::after {
+      content: "🌸";
+      position: absolute;
+      font-size: 1.8rem;
+    }
+
+    #quoteBox::before {
+      top: -15px;
+      left: -15px;
+    }
+    #quoteBox::after {
+      bottom: -15px;
+      right: -15px;
+    }
+
+    button {
+      background: #c77dff;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #9d4edd;
+      transform: scale(1.05);
+    }
+
+    .flowers {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .flower {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: fall 8s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10%); }
+      100% { transform: translateY(110vh); }
+    }
+
+    /* Popup */
+    #popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(75, 0, 130, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    #popupContent {
+      background: #fff0f6;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 400px;
+    }
+
+    #popupContent h2 {
+      color: #6a0dad;
+      margin-bottom: 15px;
+    }
+
+    #popupContent p {
+      margin-bottom: 20px;
+      color: #4b0082;
+    }
+  </style>
+</head>
+<body>
+  <!-- Popup -->
+  <div id="popup">
+    <div id="popupContent">
+      <h2>💜 Halo Chizu! 💜</h2>
+      <p>🌸 Selamat datang di halaman kecil penuh kata manis untukmu ✨</p>
+      <button onclick="closePopup()">Masuk 🌷</button>
+    </div>
+  </div>
+
+  <h1>🌸 Catatan Manis untuk Chizu 💜</h1>
+  <div id="quoteBox">Klik tombol di bawah untuk membuat duniamu!</div>
+  <button onclick="generateQuote()">🌷 Bunga Untukku 🌷</button>
+
+  <div class="flowers" id="flowers"></div>
+
+  <script>
+    const quotes = [
+      "🌸💜 Jangan menyerah, bunga pun butuh hujan untuk tumbuh. 🌧️✨",
+      "🥺💜 Kamu lebih kuat dari yang kamu pikirkan. 🌟🌸",
+      "💌✨ Hidup itu kadang berat, tapi kamu nggak sendirian. 🌸🤍",
+      "🌷💜 Senyum kecilmu bisa jadi cahaya untuk orang lain. 🌞✨",
+      "🌸🦋 Luka hari ini akan jadi pelajaran indah besok. 💜📖",
+      "💜🌙 Bahkan malam paling gelap pun akan berakhir dengan fajar. ☀️✨",
+      "🌻💜 Jangan lupakan betapa berharganya dirimu. 🌸🥺",
+      "🍀💜 Kamu pantas bahagia, jangan ragu untuk meraihnya. 🌟✨",
+      "🌸✨ Istirahat juga bagian dari berjuang, jangan lupa ya. 💜😌",
+      "💜🌸 Kamu adalah karya seni yang sedang berkembang. 🎨✨",
+      "🌹💜 Sesakit apapun, hati bisa sembuh perlahan. ⏳🌸",
+      "🌸💜 Jangan bandingkan dirimu dengan orang lain, kamu unik. 🌟🦋",
+      "🌙💜 Harapan selalu ada, meski samar. 🌌🌸",
+      "💜🌸 Hidup itu indah dengan segala luka dan tawa. 🌈✨",
+      "🥺💜 Kamu dicintai lebih dari yang kamu sadari. 🌸💌",
+      "🌷💜 Hujan pun tak abadi, begitu juga kesedihanmu. 🌧️✨"
+    ];
+
+    function generateQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      document.getElementById("quoteBox").innerText = quotes[randomIndex];
+    }
+
+    // popup control
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    // bikin bunga jatuh random
+    function createFlower() {
+      const flower = document.createElement("div");
+      flower.className = "flower";
+      flower.innerText = "🌸";
+      flower.style.left = Math.random() * 100 + "vw";
+      flower.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.getElementById("flowers").appendChild(flower);
+
+      setTimeout(() => {
+        flower.remove();
+      }, 10000);
+    }
+
+    setInterval(createFlower, 800);
+  </script>
+</body>
+</html>
